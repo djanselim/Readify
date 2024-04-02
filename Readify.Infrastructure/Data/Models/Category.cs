@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static Readify.Infrastructure.Constants.DataConstants;
 
 namespace Readify.Infrastructure.Data.Models
 {
@@ -9,6 +10,7 @@ namespace Readify.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(CategoryNameMaxLength)]
         [Comment("Category name")]
         public string Name { get; set; } = string.Empty;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static Readify.Infrastructure.Constants.DataConstants;
 
 namespace Readify.Infrastructure.Data.Models
 {
@@ -11,10 +12,12 @@ namespace Readify.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(BookTitleMaxLength)]
         [Comment("Title of the book")]
         public string Title { get; set; } = string.Empty;
 
         [Required]
+        [MaxLength(BookDescriptionMaxLength)]
         [Comment("Description of the book")]
         public string Description { get; set; } = string.Empty;
 
@@ -24,6 +27,7 @@ namespace Readify.Infrastructure.Data.Models
         public decimal Price { get; set; }
 
         [Required]
+        [MaxLength(BookLanguageMaxLength)]
         [Comment("Language of the book")]
         public string Language { get; set; } = string.Empty;
 
