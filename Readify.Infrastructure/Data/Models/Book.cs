@@ -17,6 +17,10 @@ namespace Readify.Infrastructure.Data.Models
         public string Title { get; set; } = string.Empty;
 
         [Required]
+        [Comment("Image URL of the book")]
+        public string ImageUrl { get; set; } = string.Empty;
+
+        [Required]
         [MaxLength(BookDescriptionMaxLength)]
         [Comment("Description of the book")]
         public string Description { get; set; } = string.Empty;
@@ -25,6 +29,11 @@ namespace Readify.Infrastructure.Data.Models
         [Comment("Price of the book")]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+
+        [Required]
+        [Comment("Rating of the book")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
+        public decimal Rating { get; set; } = 2.5m;
 
         [Required]
         [MaxLength(BookLanguageMaxLength)]
@@ -39,12 +48,14 @@ namespace Readify.Infrastructure.Data.Models
         [Comment("Author identifier")]
         public int AuthorId { get; set; }
 
-        public Author Author { get; set; } = new Author();
-
         [Required]
         [Comment("Category identifier")]
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; } = new Category();
+        [ForeignKey(nameof(CategoryId))]
+        public Category Category { get; set; } = null!;
+
+        [ForeignKey(nameof(AuthorId))]
+        public Author Author { get; set; } = null!;
     }
 }

@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static Readify.Infrastructure.Constants.DataConstants;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Readify.Infrastructure.Data.Models
 {
@@ -11,9 +12,11 @@ namespace Readify.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(AuthorNameMaxLength)]
-        [Comment("Name of Author")]
-        public string Name { get; set; } = string.Empty;
+        [Comment("User Identifier")]
+        public string UserId { get; set; } = string.Empty;
+
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; } = null!;
 
         [Comment("List of all the books of author")]
         public List<Book> Books { get; set; } = new List<Book>();
