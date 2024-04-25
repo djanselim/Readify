@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Readify.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using Readify.Infrastructure.Data;
 namespace Readify.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421151448_AuthorPhoneNumberAdded")]
+    partial class AuthorPhoneNumberAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,15 +145,15 @@ namespace Readify.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0164a576-63bc-46cc-ae75-daf37f8849cc",
+                            ConcurrencyStamp = "a37a8e2a-9356-4f19-b57c-519c7074d48e",
                             Email = "author@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "author@mail.com",
                             NormalizedUserName = "AUTHOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDBqdnVB8/Bawyqs12NcrmzMNtjX2wc1epY3pMQdMtjSHhQM1Vuv0gpa0vSq4xr6FQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENGNTt7HI8sDo0KG3NLharKNd+grMlbJ9kPmy4wDyIqiHZ08m0CoDKLmI09iwFmJ6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad6ea071-8fc4-4fa9-a1da-3c272ec1bd81",
+                            SecurityStamp = "797d6091-4436-464d-a5c9-bbf0f3d77906",
                             TwoFactorEnabled = false,
                             UserName = "author"
                         },
@@ -159,15 +161,15 @@ namespace Readify.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3b29213b-c6e7-41df-96ac-94bc8970882f",
+                            ConcurrencyStamp = "0728d831-96ec-43ee-aaf7-41c9d19d8683",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPLxHbPmaqj2bEf/9J2O3bkRtMfGfZkLVE3KqBEO3UELqD4JctfeuSMVKWOiThXn2g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE3C0WMARrNcNV4BZG+mAMmO/kPael8JbrLXXkpP8z1maru7WYKn9SymPQCDfW49jQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eaa61f05-cc98-41c8-980f-ad1235899204",
+                            SecurityStamp = "a88746c9-aa84-4b01-9060-5c91c1140107",
                             TwoFactorEnabled = false,
                             UserName = "guest"
                         });
@@ -267,12 +269,6 @@ namespace Readify.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("Author's Name");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -286,9 +282,6 @@ namespace Readify.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Authors");
@@ -297,7 +290,6 @@ namespace Readify.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            FullName = "",
                             PhoneNumber = "",
                             UserId = "dea12856-c198-4129-b3f3-b893d8395082"
                         });
