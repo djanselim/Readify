@@ -15,6 +15,8 @@
         // Author Constants
         public const int AuthorNameMaxLength = 50;
         public const int AuthorNameMinLength = 3;
+        public const int AuthorPhoneNumberMaxLength = 20;
+        public const int AuthorPhoneNumberMinLength = 5;
 
         // Category Constants
         public const int CategoryNameMaxLength = 50;

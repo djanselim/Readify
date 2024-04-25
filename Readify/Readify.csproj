@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Readify.Core\Readify.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
+
 </Project>

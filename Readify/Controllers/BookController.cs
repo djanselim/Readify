@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Readify.Core.Contracts;
 using Readify.Core.Models.Book;
+using Readify.Core.Services;
+using Readify.Extensions;
 
 namespace Readify.Controllers
 {
-	[Authorize]
-	public class BookController : Controller
+	public class BookController : BaseController
 	{
-		[AllowAnonymous]
-		[HttpGet]
-		public async Task<IActionResult> AllCategories()
-		{
-			var model = new AllCategoriesQueryModel();
+		private readonly IBookService bookService;
+		private readonly IAuthorService authorService;
 
-			return View(model);
-		}
+		public BookController(IBookService _bookService, IAuthorService _authorService)
+		{
+            bookService = _bookService;
+			authorService = _authorService;
+        }
 
 		[HttpGet]
 		public async Task<IActionResult> Mine()
 		{
 			var model = new AllBooksQueryModel();
 
-			return View(model);
+			return View();
 		}
 
 		[HttpGet]
@@ -33,15 +35,50 @@ namespace Readify.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Publish()
+		public async Task<IActionResult> Publish()
 		{
-			return View();
+            var model = new BookFormModel()
+            {
+                Categories = await bookService.AllCategoriesAsync()
+            };
+
+            return View(model);
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Publish(BookFormModel model)
 		{
-			return RedirectToAction(nameof(Details), new { id = 1 });
+			if(!ModelState.IsValid)
+			{
+                model.Categories = await bookService.AllCategoriesAsync();
+
+                return View(model);
+            }
+
+			int? authorId = await authorService.GetAuthorIdAsync(User.Id());
+			
+			int newBookId = await bookService.CreateAsync(model, authorId ?? 0);
+
+			return RedirectToAction(nameof(Details), new { id = newBookId });
+		}
+
+		[AllowAnonymous]
+		[HttpGet]
+		public async Task<IActionResult> All([FromQuery] AllBooksQueryModel model)
+		{
+			var books = await bookService.AllAsync(
+				model.Category,
+				model.SearchTerm,
+				model.SortBy,
+				model.CurrentPage,
+				model.BookPerPage
+				);
+
+			model.TotalBooks = books.TotalBooks;
+			model.Books = books.Books;
+			model.Categories = await bookService.AllCategoriesNamesAsync();
+
+			return View(model);
 		}
 
 		[HttpGet]

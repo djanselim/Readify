@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Readify.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
 	{
 		private readonly ILogger<HomeController> _logger;	
 		private readonly IBookService bookService;
@@ -27,6 +27,7 @@ namespace Readify.Controllers
 			return View(model);
 		}
 
+		[AllowAnonymous]
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

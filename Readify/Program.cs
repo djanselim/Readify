@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Readify.Core.Contracts;
-using Readify.Core.Services.Book;
+using Readify.Core.Services;
 using Readify.Infrastructure.Data;
 using Readify.Infrastructure.Data.Common;
 
@@ -24,6 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 builder.Services.AddControllersWithViews();
 
